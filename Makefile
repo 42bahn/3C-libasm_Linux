@@ -6,7 +6,7 @@
 #    By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/05 15:29:22 by bahn              #+#    #+#              #
-#    Updated: 2021/04/05 19:30:01 by bahn             ###   ########.fr        #
+#    Updated: 2021/04/07 14:19:36 by bahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,11 +21,9 @@ RM		= rm -rf
 
 CFLAG		= -Wall -Werror -Wextra
 AFLAG		= -f elf64
-#AFLAG		= -f macho64
 
 INC_DIR		= includes/
 SRC_DIR		= srcs/
-OBJ_DIR		= ./
 
 INC_FILES	= libasm.h
 SRC_FILES	= ft_write.s \
@@ -43,7 +41,7 @@ all		: $(NAME)
 
 $(NAME)		: $(OBJS)
 		$(AR) $(NAME) $(OBJS)
-		ranlib $(NAME)
+		ranlib $(NAME)	# ar c $(NAME)
 
 .s.o		: $(SRCS)
 		$(NASM) -I$(INC) $(AFLAG) $< -o $@
@@ -56,10 +54,4 @@ fclean		: clean
 
 re		: fclean all
 
-.PHONY		: all, clean, fclean, re, bonus
-		
-
-
-
-	  
-	 
+.PHONY		: all, clean, fclean, re
