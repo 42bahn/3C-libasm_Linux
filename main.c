@@ -4,7 +4,7 @@
 
 int	main(void)
 {
-	printf("%s\n", _ft_strdup("abcde"));
+	printf("%s\n", _ft_strdup(""));
 
 	return (0);
 }
