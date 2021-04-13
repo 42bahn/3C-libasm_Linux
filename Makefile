@@ -6,7 +6,7 @@
 #    By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/05 15:29:22 by bahn              #+#    #+#              #
-#    Updated: 2021/04/07 14:19:36 by bahn             ###   ########.fr        #
+#    Updated: 2021/04/13 11:21:22 by bahn             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ SRC_FILES	= ft_write.s \
 		  ft_strlen.s \
 		  ft_strcmp.s \
 		  ft_strcpy.s \
-		  ft_strdup.s
+		  ft_strdup.s \
+		  ft_atoi_base.s
 
 INC		= $(addprefix $(INC_DIR), $(INC_FILES))
 SRCS		= $(addprefix $(SRC_DIR), $(SRC_FILES))

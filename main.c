@@ -4,7 +4,7 @@
 
 int	main(void)
 {
-	printf("%s\n", _ft_strdup(""));
+	printf("%d\n", _ft_atoi_base("     1997", "0123456789"));
 
 	return (0);
 }

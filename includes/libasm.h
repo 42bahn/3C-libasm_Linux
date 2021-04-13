@@ -6,7 +6,7 @@
 /*   By: bahn <bahn@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/05 16:08:06 by bahn              #+#    #+#             */
-/*   Updated: 2021/04/09 16:00:24 by bahn             ###   ########.fr       */
+/*   Updated: 2021/04/13 13:28:55 by bahn             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ size_t		_ft_strlen(const char *s);
 int			_ft_strcmp(const char *s1, const char *s2);
 char		*_ft_strcpy(char *dest, const char *src);
 char		*_ft_strdup(const char *s);
+
+int			_ft_atoi_base(char *str, char *base);
 
 #endif
 
