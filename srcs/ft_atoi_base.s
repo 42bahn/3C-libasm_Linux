@@ -1,9 +1,4 @@
-section .data
-	arg1	db	"%s\n"
-	arg2	db	"12345"
-
 section	.text
-	extern	_ft_write
 	extern	_ft_strlen
 	global	_ft_atoi_base
 
@@ -11,29 +6,25 @@ _ft_atoi_base:
 	; xor : 명령어의 크기가 mov 명령어보다 작다.
 	; r8 = 문자열 str 포인터 
 	; r9 = 진법 변환된 숫자를 저장할 변수
+	; r10 = 진수
 	xor	rcx, rcx	; rcx = 0
 	call	ft_isspace
 	mov	rdi, rax
-	
-	xor	r9, r9
 	
 	push	rdi
 	push	rsi
 	mov	rdi, rsi
 	call	_ft_strlen
 	
-	mul	r9
+	mov	r10, rax
 	
-	xor	rcx, rcx
 	pop	rsi
 	pop	rdi
 
-	;call	ft_convertion
+	xor	r9, r9
+	call	set_number
 	
-	add	r9, rcx
-
 	mov	rax, r9
-	mov	rax, 0
 	ret
 
 ft_isspace:
@@ -63,22 +54,33 @@ ft_isspace:
 
 increase_count:
 	inc	rdi
-	call	ft_isspace
+	jmp	ft_isspace
+
+set_number:
+	cmp	BYTE [rdi], 0x00
+	je	exit
+
+	xor	rcx, rcx
+	call	ft_convertion
+	mov	rax, r10
+	mul	r9
+	
+	mov	r9, rax
+
+	add	r9, rcx
+
+	inc	rdi
+	jmp	set_number
 
 ft_convertion:
-	;cmp	BYTE [rdi], BYTE [rsi + rcx]
-	;je	exit
+	mov	al, BYTE [rdi]
+	mov	bl, BYTE [rsi + rcx]
+	
+	cmp	al, bl
+	je	exit
 
 	inc	rcx
-	call	ft_convertion
-
-test:	
-	mov	rdi, 1
-	pop	rsi
-	mov	rdx, 5
-	call	_ft_write
-
-;ft_getnbr:
+	jmp	ft_convertion
 
 exit:
 	ret
