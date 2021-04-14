@@ -4,27 +4,30 @@ section	.text
 
 _ft_atoi_base:
 	; xor : 명령어의 크기가 mov 명령어보다 작다.
-	; r8 = 문자열 str 포인터 
-	; r9 = 진법 변환된 숫자를 저장할 변수
-	; r10 = 진수
-	xor	rcx, rcx	; rcx = 0
-	call	ft_isspace
-	mov	rdi, rax
-	
+	; r8 = 진수
+	; r9 = 부호 처리 변수
+	; r10 = 진법 변환된 숫자를 저장할 변수
+
 	push	rdi
 	push	rsi
 	mov	rdi, rsi
 	call	_ft_strlen
-	
-	mov	r10, rax
-	
+	mov	r8, rax		; r8에 진수 저장
+
+	xor	rcx, rcx
 	pop	rsi
 	pop	rdi
+	call	ft_isspace
+	mov	rdi, rax	; 공백 제거된 str 포인터
+	
+	mov	r9, 1
+	call	set_sign
 
-	xor	r9, r9
+	xor	r10, r10	
 	call	set_number
 	
-	mov	rax, r9
+	mov	rax, r10
+	mul	r9
 	ret
 
 ft_isspace:
@@ -56,23 +59,46 @@ increase_count:
 	inc	rdi
 	jmp	ft_isspace
 
+set_sign:
+	cmp	BYTE [rdi], 0x00
+	je	exit
+
+	cmp	BYTE [rdi], 0x2B
+	je	multi_postive
+	cmp	BYTE [rdi], 0x2D
+	je	multi_negative
+
+	ret
+
+multi_postive:
+	imul	r9, 1
+
+	inc	rdi
+	jmp	set_sign
+
+multi_negative:
+	imul	r9, -1
+
+	inc	rdi
+	jmp	set_sign
+
 set_number:
 	cmp	BYTE [rdi], 0x00
 	je	exit
 
 	xor	rcx, rcx
-	call	ft_convertion
-	mov	rax, r10
-	mul	r9
+	call	base_convertion
+	mov	rax, r8
+	mul	r10
 	
-	mov	r9, rax
+	mov	r10, rax
 
-	add	r9, rcx
+	add	r10, rcx
 
 	inc	rdi
 	jmp	set_number
 
-ft_convertion:
+base_convertion:
 	mov	al, BYTE [rdi]
 	mov	bl, BYTE [rsi + rcx]
 	
@@ -80,7 +106,7 @@ ft_convertion:
 	je	exit
 
 	inc	rcx
-	jmp	ft_convertion
+	jmp	base_convertion
 
 exit:
 	ret
